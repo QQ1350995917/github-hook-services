@@ -1,5 +1,6 @@
 *.iml
 gradle
+ignore
 .gradle
 /local.properties
 .idea/

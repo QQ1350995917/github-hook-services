@@ -50,7 +50,10 @@ public class Runner extends AbstractVerticle {
     private void deployHornbook() {
         String path = "/home/ubuntu/applications/hornbook/hornbook-service";
         String executeGit = "git pull --rebase origin";
-        String executeGradle = "gradle clean build autoDeploy";
+        String executeGradle = "gradle clean build autoDeploy -x test";
+
+//        String path = "/Users/pwd/workspace/dingpw/github-hook-service/ignore/hornbook-service";
+//        String executeGit = "pwd";
         String cmd = "cd " + path + " && " + executeGit + " && " + executeGradle;
         execute(cmd);
     }
