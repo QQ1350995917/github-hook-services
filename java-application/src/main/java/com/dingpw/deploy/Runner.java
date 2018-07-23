@@ -6,6 +6,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.Json;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,20 +49,21 @@ public class Runner extends AbstractVerticle {
     }
 
     private void deployHornbook() {
-        String path = "/home/ubuntu/applications/hornbook/hornbook-service";
+        String path = "/home/ubuntu/applications/hornbook/hornbook-service/";
         String executeGit = "git pull --rebase origin";
         String executeGradle = "gradle clean build autoDeploy -x test";
 
 //        String path = "/Users/pwd/workspace/dingpw/github-hook-service/ignore/hornbook-service";
 //        String executeGit = "pwd";
-        String cmd = "cd " + path + " && " + executeGit + " && " + executeGradle;
-        execute(cmd);
+        String cmd = executeGit + " && " + executeGradle;
+        execute(path,cmd);
     }
 
-    private void execute(String cmd) {
+    private void execute(String path,String cmd) {
         Runtime run = Runtime.getRuntime();
         try {
-            Process process = run.exec(new String[]{"/bin/sh", "-c", cmd});
+            Process process = run.exec(new String[]{"/bin/sh", "-c", cmd},null,new File(path));
+            process.waitFor();
             InputStream in = process.getInputStream();
             BufferedReader bs = new BufferedReader(new InputStreamReader(in));
             List<String> list = new ArrayList<>();
@@ -73,7 +75,7 @@ public class Runner extends AbstractVerticle {
             in.close();
             bs.close();
             process.destroy();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
