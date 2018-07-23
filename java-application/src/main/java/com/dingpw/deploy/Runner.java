@@ -41,11 +41,16 @@ public class Runner extends AbstractVerticle {
         }).listen();
     }
 
+    public static void main(String[] args) {
+        new Runner().deployHornbook();
+    }
+
     private void deployHornbook() {
-        String path = "/home/ubuntu/applications/hornbook/hornbook-service";
+//        String path = "/home/ubuntu/applications/hornbook/hornbook-service";
+        String path = "/Users/pwd/workspace/dingpw/hornbook-service/";
         String executeGit = "git pull --rebase origin";
         String executeGradle = "gradle clean build autoDeploy";
-        String cmd = "cd " + path + " | " + executeGit + " | " + executeGradle;
+        String cmd = "cd " + path + " && " + executeGit + " && " + executeGradle;
         execute(cmd);
     }
 
