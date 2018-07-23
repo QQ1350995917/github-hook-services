@@ -5,11 +5,11 @@ vertx.createHttpServer()
     console.log("request path is : " + req.path());
 
     if (method == "GET"){
-      console.log(req.params());
+      console.log("get " + req.params());
     } else if (method == "POST"){
       req.bodyHandler(function (body){
         var params = body.toString();
-        console.log(params);
+        console.log("post " + params);
       });
     }
 
